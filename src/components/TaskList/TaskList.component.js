@@ -6,6 +6,7 @@ import { Typography } from "@mui/material";
 import { Button } from "@mui/material";
 import { CircularProgress } from "@mui/material";
 import { TaskCard } from "../TaskCard/TaskCard.component";
+import { taskActions } from "../../actions/taskActions";
 
 export const TaskList = ()=>{
 
@@ -19,10 +20,8 @@ export const TaskList = ()=>{
         updatedTasks[index].completed=true;
         setTasks(updatedTasks);
 
-        // 2. PUT request
-
-
-        console.log(taskId);
+        // 2. PUT request 
+        taskActions.putTask(taskId, updatedTasks[index]).then(res=>console.log(res))
     }
 
 
