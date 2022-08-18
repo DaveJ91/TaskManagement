@@ -10,12 +10,15 @@ import { TaskCard } from "../TaskCard/TaskCard.component";
 export const TaskList = ()=>{
 
     const {tasks, loadingStatus } = useTasks();
+
+    const outstandingTasks = tasks.filter(task=>task.completed==false)
     return(
         <>
          { loadingStatus==="loading" ?  <CircularProgress/> : 
          <>
+         <p>{outstandingTasks.length} outstanding tasks</p>
             {tasks.map(task=>(
-                <TaskCard title={task.title} dueDate={task.due}/>
+                <TaskCard title={task.title} dueDate={task.due} done={task.completed}/>
             ))}
             </>
         }

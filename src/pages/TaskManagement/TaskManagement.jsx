@@ -6,12 +6,9 @@ import './TaskManagement.styles.css'
 
 export const TaskManagement = () => {
 
-    
-
-
     return (
         <div className="container">
-            <h1 >Task Manangement Page</h1>
+            <h2>Task Manangement</h2>
             <TaskList/>
 
         </div>
