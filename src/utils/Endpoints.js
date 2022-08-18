@@ -4,4 +4,5 @@ export const Endpoints = {
     getTasks: ()=>`${baseURL}`,
     getTask: (taskId)=>`${baseURL}/${taskId}`,
     putTask: (taskId)=>`${baseURL}/${taskId}`,
+    postTask: ()=>`${baseURL}`
 }

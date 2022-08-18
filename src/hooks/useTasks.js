@@ -13,7 +13,7 @@ export const useTasks = () =>{
                 setLoadingStatus("error")
             })
             .then(res=>{
-                setTasks(res.slice(0,5))
+                setTasks(res)
                 setLoadingStatus("loaded")
             })
     },[])
