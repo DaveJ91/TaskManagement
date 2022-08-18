@@ -1,6 +1,14 @@
+* {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+ 
+}
+
 .App {
   text-align: center;
+  background-color: #0e1a2b;
 }
+
 
 .App-logo {
   height: 40vmin;
