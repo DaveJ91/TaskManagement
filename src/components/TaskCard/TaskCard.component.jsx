@@ -5,7 +5,7 @@ import './TaskCard.styles.css'
 import TaskOutlinedIcon from "@mui/icons-material/Task";
 import moment from "moment";
 
-export const TaskCard = (props)=>{
+const TaskCard = (props)=>{
 
     const CardStyle = {
         backgroundColor: props.done ? "inherit": "white",
@@ -36,3 +36,5 @@ export const TaskCard = (props)=>{
        </div>
     )
 }
+
+export default TaskCard;

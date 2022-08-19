@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState, useReducer} from "react";
 import { taskActions } from "../actions/taskActions";
+import { tasksReducer } from "../reducers/tasksReducer";
 
 export const useTasks = () =>{
-    const [tasks, setTasks] = useState([]);
+    const [tasks, dispatch] = useReducer(tasksReducer,[]);
     const [loadingStatus, setLoadingStatus]=useState("loading")
 
     useEffect(()=>{
@@ -12,13 +13,16 @@ export const useTasks = () =>{
                 console.log(err)
                 setLoadingStatus("error")
             })
-            .then(res=>{
-                setTasks(res)
+            .then(tasks=>{
+                dispatch({
+                    type: "ADD_TASKS",
+                    tasks
+                })
                 setLoadingStatus("loaded")
             })
     },[])
 
-    return {tasks, setTasks, loadingStatus}
+    return {tasks, dispatch, loadingStatus}
      
 
 }

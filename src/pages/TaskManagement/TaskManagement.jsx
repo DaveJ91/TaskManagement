@@ -1,35 +1,58 @@
-import React from 'react';
-import AppBar from '@mui/material/AppBar';
-import { Typography } from '@mui/material';
-import { TaskList } from '../../components/TaskList/TaskList.component';
+import React, {useState} from 'react';
 import './TaskManagement.styles.css'
 import {Button} from '@mui/material';
 import { taskActions } from '../../actions/taskActions';
+import { CircularProgress } from '@mui/material';
+import TaskCard from '../../components/TaskCard/TaskCard.component';
+import { useTasks } from '../../hooks/useTasks'
+import {v4 as uuidv4} from 'uuid';
+import Modal from '@mui/material/Modal';
+import AddTaskModal from '../../components/AddTaskModal/AddTaskModal.component';
 
 export const TaskManagement = () => {
 
+    const {tasks, dispatch, loadingStatus} = useTasks();
+    const [modalOpen, setModalOpen] = useState(false);
+
     const handleClick = ()=>{
-        taskActions.postTask(
-            {
-                "createdAt": "2022-08-17T03:19:33.924Z",
-                "title": "File Annual B1 return",
-                "assignee": "assignee 1",
-                "due": "2023-02-10T11:47:13.489Z",
-                "completed": true,
-                "category": "not important",
-                "id": "1"
-               }
-        ).then(res=>console.log(res))
+        setModalOpen(true)
     }
+
+    const handleMarkDone = (taskId)=>{
+        dispatch({
+            type:"MARK_DONE",
+            taskId
+        })
+    }
+
+    const addTask=(task)=>{
+        dispatch({
+            type:"ADD_TASKS",
+            tasks: [task]
+        })
+
+        //POST request
+
+        setModalOpen(false)
+    }
+
+    const outstandingTasks = tasks.filter(t=>t.completed===false)
+
+    console.log(tasks)
 
     return (
         <div className="container">
             <Button onClick={handleClick}>Add Task</Button>
             <h2>Task Manangement</h2>
-            <TaskList/>
-
-        </div>
-        
-    )
-
-}
+            { loadingStatus==="loading" ?  <CircularProgress/> : 
+                <div>
+                    <p>{outstandingTasks.length} outstanding tasks</p>
+                        { tasks.map(task=>
+                            <TaskCard key={task.id} title={task.title} dueDate={task.due} done={task.completed} handleMarkDone={handleMarkDone} id={task.id} />
+                        )
+            }
+            </div>
+            }
+            <AddTaskModal open={modalOpen} handleClose={()=>setModalOpen(false)} addTask={addTask}/>
+        </div>   
+    )};
