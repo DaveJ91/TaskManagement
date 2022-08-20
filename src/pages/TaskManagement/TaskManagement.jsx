@@ -31,12 +31,26 @@ export const TaskManagement = () => {
             taskId
         })
     }
+    
+    const handleMarkAllComplete = ()=>{
+        dispatch({
+            type:"MARK_ALL_COMPLETE"
+        })
+    }
+
+    const handleDeleteAll =()=>{
+        dispatch({
+            type:"DELETE_ALL_TASKS"
+        })
+    }
 
     const addTask=(task)=>{
         dispatch({
             type:"ADD_TASKS",
             tasks: [task]
         })
+
+        // add completed date and who completed it
 
         //POST request
 
@@ -64,7 +78,8 @@ export const TaskManagement = () => {
     return (
         <div className="container">
             <Button onClick={handleClick}>Add Task</Button>
-
+            <Button onClick={handleMarkAllComplete}>Mark All Complete</Button>
+            <Button onClick={handleDeleteAll}>Delete All</Button>
             
             <div>
             <ToggleButtonGroup
@@ -80,6 +95,7 @@ export const TaskManagement = () => {
             </ToggleButtonGroup>
             </div>
             
+
 
             <h2>Task Manangement</h2>
             { loadingStatus==="loading" ?  <CircularProgress/> : 
