@@ -7,11 +7,11 @@ import { UserProvider } from './contexts/UserContext/UserContext';
 function App() {
   return (
     <div className="App">
-    <LocalizationProvider dateAdapter={AdapterMoment}>
-      <UserProvider>
-          <TaskManagement/>
-        </UserProvider>
-      </LocalizationProvider>
+      <LocalizationProvider dateAdapter={AdapterMoment}>
+        <UserProvider>
+            <TaskManagement/>
+          </UserProvider>
+        </LocalizationProvider>
     </div>
   );
 }

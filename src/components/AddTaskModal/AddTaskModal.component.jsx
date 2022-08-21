@@ -18,7 +18,7 @@ const AddTaskModal=(props)=>{
         transform: 'translate(-50%, -50%)',
         width: 400,
         bgcolor: 'background.paper',
-        border: '2px solid #000',
+        borderRadius:"3px",
         boxShadow: 24,
         p: 4,
       };
@@ -53,7 +53,9 @@ const AddTaskModal=(props)=>{
             >
             <Box sx={style}>
           <h2>Add Task</h2>
-          <TextField id="outlined-basic" label="Task Title" variant="outlined"  value={taskTitle} onChange={(e)=>setTaskTitle(e.target.value)}/>
+          <TextField id="outlined-basic" variant="outlined"  placeholder="What needs to be done?" value={taskTitle} onChange={(e)=>setTaskTitle(e.target.value)}/>
+
+          {/* TextField who needs to do it?*/}
           <br/>
           <br/>
           <DatePicker

@@ -13,3 +13,11 @@ isAuthenticated ?
 jest tests
 feature flags
 custom theming
+add audit trail
+accessnpm 
+-assign to a person
+// multiline formatting on cards
+animations
+
+
+to do animation - make it look pretty - loading tasks
