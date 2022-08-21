@@ -8,6 +8,7 @@ export const mockTasks = [
      "dateCompleted": null,
     "completedBy":null,
      "category": "not important",
+     "dismissed": false,
      "dateDismissed": null,
      "id": "1"
     },
@@ -21,6 +22,7 @@ export const mockTasks = [
      "dateDismissed": null,
     "completedBy":null,
      "category": "category 2",
+     "dismissed": false,
      "id": "2"
     },
     {
@@ -33,6 +35,7 @@ export const mockTasks = [
     "completedBy":null,
     "dateDismissed": null,
      "category": "category 3",
+     "dismissed": false,
      "id": "3"
     },
     {
@@ -45,6 +48,7 @@ export const mockTasks = [
     "completedBy":null,
     "dateDismissed": null,
      "category": "category 4",
+     "dismissed": false,
      "id": "4"
     },
     {
@@ -57,6 +61,7 @@ export const mockTasks = [
     "completedBy":null,
     "dateDismissed": null,
      "category": "category 5",
+     "dismissed": false,
      "id": "5"
     }
    ]

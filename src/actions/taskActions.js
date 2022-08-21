@@ -1,7 +1,7 @@
 import { Endpoints } from "../utils/Endpoints"
 
 export const taskActions = {
-    async getTasks() {
+    getTasks() {
         return fetch(Endpoints.getTasks(), {
             method: "GET"
         })

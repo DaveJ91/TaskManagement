@@ -1,10 +1,10 @@
 export const tasksReducer = (state, action) => {
     let newState = [...state];
+    const index = state.findIndex(task=>task.id===action.taskId)??"";
 
     switch (action.type) {
 
         case "MARK_DONE":
-            const index = state.findIndex(task=>task.id===action.taskId);
             newState[index].completed=true;
             return newState;
 
@@ -14,11 +14,16 @@ export const tasksReducer = (state, action) => {
         case "ADD_TASKS":
             return newState.concat(action.tasks);
 
+        case "DELETE_TASK":
+            console.log("clcik dle")
+            newState[index].dismissed=true;
+            return newState;
+
         case "DELETE_ALL_TASKS":
             return [];
 
         default:
-            return state;
+            return newState.map(task=>{return{...task, dismissed:true}})
             
     }
 }

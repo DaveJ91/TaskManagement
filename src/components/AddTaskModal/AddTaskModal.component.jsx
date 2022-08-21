@@ -34,6 +34,7 @@ const AddTaskModal=(props)=>{
                 assignee: "assignee 1",
                 due: taskDate,
                 completed: false,
+                dismissed: false,
                 category: "not important",
                 id: uuidv4()
             }

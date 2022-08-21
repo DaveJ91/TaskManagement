@@ -1,9 +1,10 @@
 import React from "react";
-
-import { Button } from "@mui/material";
 import './TaskCard.styles.css'
-import TaskOutlinedIcon from "@mui/icons-material/Task";
 import moment from "moment";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 
 const TaskCard = (props)=>{
 
@@ -16,20 +17,25 @@ const TaskCard = (props)=>{
     const iconStyle = {
         color: props.done ? "grey" : "#3f9"
     }
-    const formattedDate = moment(props.due).format("DD-MM-YYYY")
+    const formattedDate = moment(props.due).format("DD-MM-YYYY");
+
+    
     return(
        <div className="card" style={CardStyle}>
-            <TaskOutlinedIcon style={iconStyle} className="icon"/>
+            <TaskAltIcon style={iconStyle} className="icon"/>
             <span className="card-text" style={{textDecoration: props.done ? "line-through": "none"}}>
                 <p className="card-title">{props.title}  &middot; </p>
                 <p className="card-subtitle">Due: {formattedDate} </p>
 
             </span>
            
-
-            {props.done ? null : 
-            <Button onClick={()=>props.handleMarkDone(props.id)} id="card-button" size="small">Done</Button>
+            <DeleteOutlinedIcon  onClick={()=>props.handleDelete(props.id)}className="icon"/>
+            {props.done ? <CheckBoxIcon  className="icon"/> : 
+                <CheckBoxOutlineBlankIcon onClick={()=>props.handleMarkDone(props.id)} className="icon"/>
+            
             }
+            
+             
 
 
 

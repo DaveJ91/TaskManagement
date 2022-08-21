@@ -4,12 +4,29 @@
     background-color: white;
     border-radius: 3px;
     height: 50px;
-    width: 80%;
+    width: 90%;
     font-size: 12px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     vertical-align: middle;
+}
+
+@keyframes cardMarkedDone {
+    from {
+        background-color: white;
+        box-shadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px";
+    }
+    to {
+        background-color: inherit;
+        box-shadow: "none";
+        border: .5px solid lightgrey;
+    }
+}
+
+
+.read {
+    animation: cardMarkedDone 3s;
 }
 
 .card-text {
@@ -25,6 +42,7 @@
     vertical-align: bottom;
     margin: 10px 10px 0px 10px;
     width: 10%;
+    color: gray;
 }
 
 .card-title {
@@ -39,3 +57,4 @@
 #card-button {
     justify-self: flex-end;
 }
+

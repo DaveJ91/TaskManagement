@@ -18,7 +18,7 @@ export const useTasks = () =>{
                     type: "ADD_TASKS",
                     tasks
                 })
-                setLoadingStatus("loaded")
+                setInterval(()=>setLoadingStatus("loaded"),1000)
             })
     },[])
 
