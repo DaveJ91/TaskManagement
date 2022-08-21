@@ -8,13 +8,11 @@ import { useTasks } from "../../hooks/useTasks";
 import AddTaskModal from "../../components/AddTaskModal/AddTaskModal.component";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import Collapse from '@mui/material/Collapse';
-import Fade from '@mui/material/Fade';
-import EditIcon from '@mui/icons-material/Edit';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import AddTaskIcon from '@mui/icons-material/AddTask';
-import DoneAllIcon from '@mui/icons-material/DoneAll';
-import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
+import EditIcon from "@mui/icons-material/Edit";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import AddTaskIcon from "@mui/icons-material/AddTask";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
+import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 
 export const TaskManagement = () => {
   const { tasks, dispatch, loadingStatus } = useTasks();
@@ -23,15 +21,14 @@ export const TaskManagement = () => {
   const [manageTasksOpen, setManageTasksOpen] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
-
-
-  const handleMarkDone = (taskId) => {
+  const handleMarkComplete = (task) => {
     dispatch({
-      type: "MARK_DONE",
-      taskId,
+      type: "MARK_COMPLETE",
+      taskId: task.id,
     });
 
-    // PUT
+    // PUT request
+    taskActions.putTask({...task, completed:true}).then(res=>console.log(res))
   };
 
   const handleMarkAllComplete = () => {
@@ -39,46 +36,64 @@ export const TaskManagement = () => {
       type: "MARK_ALL_COMPLETE",
     });
 
-    // BULK PUT
+    // Bulk PUT request
+    tasks.forEach(task=>{
+      taskActions.putTask({...task, completed:true})
+    })
   };
 
-  const handleDelete= (taskId)=> {
+  const handleDelete = (task) => {
+
+    // 1. Update State
     dispatch({
       type: "DELETE_TASK",
-      taskId
-    })
+      taskId: task.id,
+    });
 
-    // PUT
-  }
+    // 2. PUT request
+    taskActions.putTask({...task, dismissed:true}).then(res=>console.log(res))
+    
+  };
 
   const handleDeleteAll = () => {
+
+    // 1. Update State
     dispatch({
       type: "DELETE_ALL_TASKS",
     });
-    //  Bulk Put to mark
+
+     // Bulk PUT request
+     tasks.forEach(task=>{
+      taskActions.putTask({...task, dimissed:true})
+    })
   };
 
   const addTask = (task) => {
+    // 1. Update state
     dispatch({
       type: "ADD_TASKS",
       tasks: [task],
     });
 
-  
-    //POST request
+    // 2. POST request to server
     taskActions.postTask(task).then((res) => console.log(res));
 
+    // 3. Close the modal
     setModalOpen(false);
   };
 
-  const outstandingTasks = tasks.filter((t) => t.completed === false && t.dismissed===false);
-  const completedTasks = tasks.filter((t) => t.completed === true && t.dismissed===false);
+  const outstandingTasks = tasks.filter(
+    (t) => t.completed === false && t.dismissed === false
+  );
+  const completedTasks = tasks.filter(
+    (t) => t.completed === true && t.dismissed === false
+  );
 
   let filteredTasks;
 
   switch (filterValue) {
     case "all":
-      filteredTasks = tasks.filter((t)=>t.dismissed===false);
+      filteredTasks = tasks.filter((t) => t.dismissed === false);
       break;
     case "completed":
       filteredTasks = completedTasks;
@@ -86,85 +101,125 @@ export const TaskManagement = () => {
     case "outstanding":
       filteredTasks = outstandingTasks;
       break;
+    default:
+      break;
   }
 
-  console.log(tasks.map(t=>t.dismissed))
+  console.log(tasks.map((t) => t.dismissed));
 
   return (
     <div className="tasks-container">
       <div className="app-header">
-      <h1 className="title">My Tasks</h1>
-      {loadingStatus==="loading" ? null : 
-      <h4 className="title subtitle">({outstandingTasks.length} outstanding)</h4>}
+        <h1 className="title">My Tasks</h1>
+        {loadingStatus === "loading" ? null : (
+          <h4 className="title subtitle">
+            ({outstandingTasks.length} outstanding)
+          </h4>
+        )}
       </div>
 
-
-
-        
-        {loadingStatus === "loading" ? (
+      {loadingStatus === "loading" ? (
         <div>
-            <CircularProgress className="tasks-loader"/>
-            <h3>Loading ...</h3>
-        </div>) : (
-            <div className="task-list">
-                    <div className="tasks-options">
-              {filtersOpen ? (
-                  <Button variant="outlined" onClick={()=>setFiltersOpen(false)} startIcon={<FilterAltIcon/>}>Hide Filters</Button>) : (
-                  <Button variant="outlined" onClick={()=>setFiltersOpen(true)} startIcon={<FilterAltIcon/>}>Show Filters</Button>
-                )
-              }
+          <CircularProgress className="tasks-loader" />
+          <h3>Loading ...</h3>
+        </div>
+      ) : (
+        <div className="task-list">
+          <div className="tasks-options">
+            {filtersOpen ? (
+              <Button
+                variant="outlined"
+                onClick={() => setFiltersOpen(false)}
+                startIcon={<FilterAltIcon />}
+              >
+                Hide Filters
+              </Button>
+            ) : (
+              <Button
+                variant="outlined"
+                onClick={() => setFiltersOpen(true)}
+                startIcon={<FilterAltIcon />}
+              >
+                Show Filters
+              </Button>
+            )}
 
-              {manageTasksOpen ? (
-                <Button startIcon={<EditIcon/>} variant="outlined" onClick={()=>setManageTasksOpen(false)} style={{marginLeft: "20px"}}>Close Manage Tasks</Button>) :(
-                <Button startIcon={<EditIcon/>} variant="outlined" onClick={()=>setManageTasksOpen(true)} style={{marginLeft: "20px"}}>Open Manage Tasks</Button>
-                )}    
-            </div>
-        
-               {manageTasksOpen ? 
-                    <>
-                        <Button startIcon={<AddTaskIcon/>} onClick={()=>setModalOpen(true)}>Add a Task</Button>
-                        <Button startIcon={<DoneAllIcon/>} onClick={handleMarkAllComplete}>Mark All Complete</Button>
-                        <Button startIcon={<DeleteSweepIcon/>} onClick={handleDeleteAll}>Delete All</Button>
-                </>: 
-                null}
-        
-                
-                { filtersOpen ? 
-                <ToggleButtonGroup
-                    color="primary"
-                    value={filterValue}
-                    exclusive
-                    size="small"
-                    onChange={(e) => setFilterValue(e.target.value)}
-                >
-                    <ToggleButton value="all">All</ToggleButton>
-                    <ToggleButton value="outstanding">Outstanding</ToggleButton>
-                    <ToggleButton value="completed">Completed</ToggleButton>
-                </ToggleButtonGroup>
-                : null}
-            
+            {manageTasksOpen ? (
+              <Button
+                startIcon={<EditIcon />}
+                variant="outlined"
+                onClick={() => setManageTasksOpen(false)}
+                style={{ marginLeft: "20px" }}
+              >
+                Close Manage Tasks
+              </Button>
+            ) : (
+              <Button
+                startIcon={<EditIcon />}
+                variant="outlined"
+                onClick={() => setManageTasksOpen(true)}
+                style={{ marginLeft: "20px" }}
+              >
+                Open Manage Tasks
+              </Button>
+            )}
+          </div>
 
-                <div>
-                {filteredTasks.map((task) => (
-                    <TaskCard
-                    key={task.id}
-                    title={task.title}
-                    dueDate={task.due}
-                    done={task.completed}
-                    handleMarkDone={handleMarkDone}
-                    handleDelete={handleDelete}
-                    id={task.id}
-                    />
-                ))}
-                </div>
+          {manageTasksOpen ? (
+            <>
+              <Button
+                startIcon={<AddTaskIcon />}
+                onClick={() => setModalOpen(true)}
+              >
+                Add a Task
+              </Button>
+              <Button
+                startIcon={<DoneAllIcon />}
+                onClick={handleMarkAllComplete}
+              >
+                Mark All Complete
+              </Button>
+              <Button startIcon={<DeleteSweepIcon />} onClick={handleDeleteAll}>
+                Delete All
+              </Button>
+            </>
+          ) : null}
 
-            <AddTaskModal
-                open={modalOpen}
-                handleClose={() => setModalOpen(false)}
-                addTask={addTask}
-            />
-                
-            </div>    
-  )}
-  </div>)
+          {filtersOpen ? (
+            <ToggleButtonGroup
+              color="primary"
+              value={filterValue}
+              exclusive
+              size="small"
+              onChange={(e) => setFilterValue(e.target.value)}
+            >
+              <ToggleButton value="all">All</ToggleButton>
+              <ToggleButton value="outstanding">Outstanding</ToggleButton>
+              <ToggleButton value="completed">Completed</ToggleButton>
+            </ToggleButtonGroup>
+          ) : null}
+
+          <div>
+            {filteredTasks.map((task) => (
+              <TaskCard
+                key={task.id}
+                title={task.title}
+                dueDate={task.due}
+                done={task.completed}
+                handleMarkDone={handleMarkComplete}
+                handleDelete={()=>handleDelete(task)}
+                id={task.id}
+              />
+            ))}
+          </div>
+
+          <AddTaskModal
+            open={modalOpen}
+            handleClose={() => setModalOpen(false)}
+            addTask={addTask}
+          />
+        </div>
+      )}
+    </div>
+  );
 };

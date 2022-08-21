@@ -6,9 +6,6 @@ export const taskActions = {
             method: "GET"
         })
     },
-    async getTask(taskId) {
-        return ""
-    },
     async postTask(task){
         return fetch(Endpoints.postTask(), {
             method: "POST",
@@ -18,8 +15,8 @@ export const taskActions = {
             body: JSON.stringify(task)
         })
     },
-    async putTask(taskId, task){
-        return fetch(Endpoints.putTask(taskId), {
+    async putTask(task){
+        return fetch(Endpoints.putTask(task.id), {
             method: "PUT",
             headers:{
                 'Content-type':'application/json'
