@@ -32,15 +32,21 @@ export const TaskManagement = () => {
   };
 
   const handleMarkAllComplete = () => {
+
     dispatch({
       type: "MARK_ALL_COMPLETE",
     });
 
     // Bulk PUT request
     tasks.forEach(task=>{
-      taskActions.putTask({...task, completed:true})
+      if (task.completed===false){
+        taskActions.putTask({...task, completed:true})
+      }
+      
     })
   };
+
+
 
   const handleDelete = (task) => {
 
@@ -62,9 +68,11 @@ export const TaskManagement = () => {
       type: "DELETE_ALL_TASKS",
     });
 
-     // Bulk PUT request
+     // Bulk PUT request - this will cause 429s so we would need a bulk patch endpoint
      tasks.forEach(task=>{
-      taskActions.putTask({...task, dimissed:true})
+      if (task.dismissed===false){
+        taskActions.putTask({...task, dismissed:true}).then(res=>console.log(res)).catch(err=>console.log(err));
+      }
     })
   };
 
@@ -104,8 +112,6 @@ export const TaskManagement = () => {
     default:
       break;
   }
-
-  console.log(tasks.map((t) => t.dismissed));
 
   return (
     <div className="tasks-container">
@@ -206,7 +212,7 @@ export const TaskManagement = () => {
                 title={task.title}
                 dueDate={task.due}
                 done={task.completed}
-                handleMarkDone={handleMarkComplete}
+                handleMarkDone={()=>handleMarkComplete(task)}
                 handleDelete={()=>handleDelete(task)}
                 id={task.id}
               />

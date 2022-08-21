@@ -33,8 +33,9 @@ const AddTaskModal = (props) => {
       category: "not important",
       id: uuidv4(),
     };
-
     props.addTask(newTask);
+    setTaskTitle("")
+    setTaskDate(new Date())
   };
 
   return (
