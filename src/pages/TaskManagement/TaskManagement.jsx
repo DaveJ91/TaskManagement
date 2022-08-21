@@ -42,6 +42,7 @@ export const TaskManagement = () => {
         dispatch({
             type:"DELETE_ALL_TASKS"
         })
+        //  Bulk Put to mark
     }
 
     const addTask=(task)=>{
@@ -53,6 +54,7 @@ export const TaskManagement = () => {
         // add completed date and who completed it
 
         //POST request
+        taskActions.postTask(task).then(res=>console.log(res))
 
         setModalOpen(false)
     }

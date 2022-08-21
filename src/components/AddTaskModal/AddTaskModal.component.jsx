@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Button from '@mui/material/Button';
+import { useUser } from "../../contexts/UserContext/UserContext";
 
 const AddTaskModal=(props)=>{
 
@@ -39,7 +40,11 @@ const AddTaskModal=(props)=>{
         
         props.addTask(newTask);
 
+      
+
       }
+
+      console.log(useUser())
 
     return (
         <Modal

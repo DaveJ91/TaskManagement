@@ -5,7 +5,10 @@ export const mockTasks = [
      "assignee": "assignee 1",
      "due": "2023-02-10T11:47:13.489Z",
      "completed": false,
+     "dateCompleted": null,
+    "completedBy":null,
      "category": "not important",
+     "dateDismissed": null,
      "id": "1"
     },
     {
@@ -14,6 +17,9 @@ export const mockTasks = [
      "assignee": "assignee 2",
      "due": "2022-12-06T05:56:15.732Z",
      "completed": false,
+     "dateCompleted": null,
+     "dateDismissed": null,
+    "completedBy":null,
      "category": "category 2",
      "id": "2"
     },
@@ -23,6 +29,9 @@ export const mockTasks = [
      "assignee": "assignee 3",
      "due": "2023-07-27T23:33:36.850Z",
      "completed": true,
+     "dateCompleted": null,
+    "completedBy":null,
+    "dateDismissed": null,
      "category": "category 3",
      "id": "3"
     },
@@ -32,6 +41,9 @@ export const mockTasks = [
      "assignee": "assignee 4",
      "due": "2023-04-13T15:47:59.724Z",
      "completed": true,
+     "dateCompleted": null,
+    "completedBy":null,
+    "dateDismissed": null,
      "category": "category 4",
      "id": "4"
     },
@@ -41,6 +53,9 @@ export const mockTasks = [
      "assignee": "assignee 5",
      "due": "2022-08-30T02:41:54.115Z",
      "completed": true,
+     "dateCompleted": null,
+    "completedBy":null,
+    "dateDismissed": null,
      "category": "category 5",
      "id": "5"
     }

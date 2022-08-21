@@ -6,3 +6,10 @@ Simple react app to showcase my react skills
 - useContext
 - custom hooks
 - automated testing with React testing framework
+
+
+To - check a user has access
+isAuthenticated ? 
+jest tests
+feature flags
+custom theming
