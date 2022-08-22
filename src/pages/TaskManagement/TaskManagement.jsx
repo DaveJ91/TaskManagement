@@ -172,7 +172,7 @@ const TaskManagement = () => {
           </div>
 
           {manageTasksOpen ? (
-            <>
+            <div>
               <Button
                 startIcon={<AddTaskIcon />}
                 onClick={() => setModalOpen(true)}
@@ -188,7 +188,7 @@ const TaskManagement = () => {
               <Button startIcon={<DeleteSweepIcon />} onClick={handleDeleteAll}>
                 Delete All
               </Button>
-            </>
+            </div>
           ) : null}
 
           {filtersOpen ? (
