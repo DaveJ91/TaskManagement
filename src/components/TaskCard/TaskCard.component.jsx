@@ -21,7 +21,7 @@ const TaskCard = (props) => {
   const formattedDate = moment(props.due).format("DD-MM-YYYY");
 
   return (
-    <div className="card" style={CardStyle}>
+    <div className="card" data-testid="task-card" style={CardStyle}>
       <TaskAltIcon style={iconStyle} className="icon" />
       <span
         className="card-text"

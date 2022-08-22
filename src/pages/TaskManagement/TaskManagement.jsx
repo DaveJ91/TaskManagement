@@ -14,7 +14,7 @@ import AddTaskIcon from "@mui/icons-material/AddTask";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 
-export const TaskManagement = () => {
+const TaskManagement = () => {
   const { tasks, dispatch, loadingStatus } = useTasks();
   const [modalOpen, setModalOpen] = useState(false);
   const [filterValue, setFilterValue] = useState("all");
@@ -126,7 +126,7 @@ export const TaskManagement = () => {
 
       {loadingStatus === "loading" ? (
         <div>
-          <CircularProgress className="tasks-loader" />
+          <CircularProgress data-testid="tasks-loader" className="tasks-loader" />
           <h3>Loading ...</h3>
         </div>
       ) : (
@@ -229,3 +229,5 @@ export const TaskManagement = () => {
     </div>
   );
 };
+
+export default TaskManagement;
