@@ -18,7 +18,7 @@ const TaskCard = (props) => {
   const iconStyle = {
     color: props.done ? "grey" : "#3f9",
   };
-  const formattedDate = moment(props.due).format("DD-MM-YYYY");
+  const formattedDate = moment(props.dueDate).format("DD-MM-YYYY");
 
   return (
     <div className="card" data-testid="task-card" style={CardStyle}>

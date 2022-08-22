@@ -5,6 +5,7 @@ import { Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Button } from "@mui/material";
+import moment from "moment";
 
 const AddTaskModal = (props) => {
   const style = {
@@ -20,14 +21,14 @@ const AddTaskModal = (props) => {
   };
 
   const [taskTitle, setTaskTitle] = useState("");
-  const [taskDate, setTaskDate] = useState(new Date());
+  const [taskDate, setTaskDate] = useState(moment());
 
   const handleSubmit = () => {
     const newTask = {
       createdAt: new Date(),
       title: taskTitle,
       assignee: "assignee 1",
-      due: taskDate,
+      due: taskDate.toDate(),
       completed: false,
       dismissed: false,
       category: "not important",
@@ -35,7 +36,11 @@ const AddTaskModal = (props) => {
     };
     props.addTask(newTask);
     setTaskTitle("")
-    setTaskDate(new Date())
+    setTaskDate(moment())
+  };
+
+  const handleDateChange = (newValue) => {
+    setTaskDate(newValue);
   };
 
   return (
@@ -56,7 +61,7 @@ const AddTaskModal = (props) => {
           label="Due date"
           inputFormat="DD/MM/yyyy"
           value={taskDate}
-          onChange={(newValue) => setTaskDate(newValue)}
+          onChange={handleDateChange}
           renderInput={(params) => <TextField {...params} />}
         />
         <br />
