@@ -8,6 +8,7 @@ In particular here are some react features I've used. Not really needed but I wa
 - useReducer
 - useContext / Provider Pattern
 - useEffect
+- useCallback  / useMemo to maximise performance
 - Custom hooks
 - Automated testing with React testing framework
 

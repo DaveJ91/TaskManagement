@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import "./TaskManagement.styles.css";
 import { Button } from "@mui/material";
 import { taskActions } from "../../actions/taskActions";
@@ -21,7 +21,7 @@ export const TaskManagement = () => {
   const [manageTasksOpen, setManageTasksOpen] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
-  const handleMarkComplete = (task) => {
+  const handleMarkComplete = useCallback((task) => {
     dispatch({
       type: "MARK_COMPLETE",
       taskId: task.id,
@@ -29,9 +29,9 @@ export const TaskManagement = () => {
 
     // PUT request
     taskActions.putTask({...task, completed:true}).then(res=>console.log(res))
-  };
+  },[dispatch]);
 
-  const handleMarkAllComplete = () => {
+  const handleMarkAllComplete = useCallback(() => {
 
     dispatch({
       type: "MARK_ALL_COMPLETE",
@@ -44,11 +44,11 @@ export const TaskManagement = () => {
       }
       
     })
-  };
+  },[dispatch,tasks]);
 
 
 
-  const handleDelete = (task) => {
+  const handleDelete = useCallback((task) => {
 
     // 1. Update State
     dispatch({
@@ -59,9 +59,9 @@ export const TaskManagement = () => {
     // 2. PUT request
     taskActions.putTask({...task, dismissed:true}).then(res=>console.log(res))
     
-  };
+  },[dispatch]);
 
-  const handleDeleteAll = () => {
+  const handleDeleteAll = useCallback(() => {
 
     // 1. Update State
     dispatch({
@@ -74,9 +74,9 @@ export const TaskManagement = () => {
         taskActions.putTask({...task, dismissed:true}).then(res=>console.log(res)).catch(err=>console.log(err));
       }
     })
-  };
+  },[dispatch,tasks]);
 
-  const addTask = (task) => {
+  const addTask = useCallback((task) => {
     // 1. Update state
     dispatch({
       type: "ADD_TASKS",
@@ -88,14 +88,14 @@ export const TaskManagement = () => {
 
     // 3. Close the modal
     setModalOpen(false);
-  };
+  },[dispatch]);
 
-  const outstandingTasks = tasks.filter(
+  const outstandingTasks = useMemo(()=>tasks.filter(
     (t) => t.completed === false && t.dismissed === false
-  );
-  const completedTasks = tasks.filter(
+  ),[tasks]);
+  const completedTasks = useMemo(()=>tasks.filter(
     (t) => t.completed === true && t.dismissed === false
-  );
+  ),[tasks]);
 
   let filteredTasks;
 
